@@ -44,7 +44,15 @@ export default function TaskBoard(){
             case 'ADD':
                 return state;
             case 'REMOVE':
-                return {todoItems: newList.filter(i=> i.id != action.payload.id)}
+                let iAmount = state.info.itemsAmount;
+                let iMarked = state.info.itemsMarked;
+            return {
+                info:{
+                    itemsAmount: --iAmount,
+                    itemsMarked: newList[itemIndex].isCompleted ?  --iMarked : iMarked,
+                },
+                todoItems: newList.filter(i=> i.id != action.payload.id),
+            }
             case 'SORT':
                 switch (action.payload.sType){
                     case 'date-asc':
@@ -81,24 +89,32 @@ export default function TaskBoard(){
     const todoItemsList = todoItems.todoItems.map(item=>
         <ToDoItem key={item.id} item={item} taskActions={dispatch}/>)
 
+    //TODO add modal onTaskClick, show details
+    // !important if(isShowing)=> display task
+    // !important add case when list isEmpty
+    // Task Board divided by 3 left center right, on left AddTask => nextStep addTask Modal?
+    // center tasks items
+    // on right states of tasks : tasks amount & completed & uncompleted
+
+
     return(
         <div>
-            <div>okruszki ... i akcje filtowania
-
+            <div>
+                sticky header
                 <button onClick={(e)=>{
                     e.preventDefault();
                     dispatch({payload:{type:'FILTER', fType: 'all'}})
-                }}>POKAŻ WSZYTSKIE</button>
+                }}>SHOW ALL</button>
 
                 <button onClick={(e)=>{
                     e.preventDefault();
                     dispatch({payload:{type:'FILTER', fType: 'completed'}})
-                }}>POKAŻ UKOŃCZONE</button>
+                }}>SHOW COMPLETED</button>
 
                 <button onClick={(e)=>{
                     e.preventDefault();
                     dispatch({payload:{type:'FILTER', fType: 'uncompleted'}})
-                }}>POKAŻ NIEUKOŃCZONE</button>
+                }}>SHOW UNCOMPLETED</button>
 
                 <button onClick={(e)=>{
                     e.preventDefault();
@@ -111,6 +127,13 @@ export default function TaskBoard(){
                 }}>SORT down</button>
             </div>
             {todoItemsList}
+
+            <div>
+                Status Bar
+                <p>total task amount: {todoItems.info.itemsAmount}</p>
+                <p>completed tasks: {todoItems.info.itemsMarked}</p>
+                <p>incompleted task tasks: {todoItems.info.itemsAmount - todoItems.info.itemsMarked}</p>
+            </div>
         </div>
     )
 }
