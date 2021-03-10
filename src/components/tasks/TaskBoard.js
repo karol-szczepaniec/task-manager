@@ -46,7 +46,14 @@ export default function TaskBoard(){
             case 'REMOVE':
                 return {todoItems: newList.filter(i=> i.id != action.payload.id)}
             case 'SORT':
-                return state;
+                switch (action.payload.sType){
+                    case 'date-asc':
+                        return {todoItems: newList.sort((from, to)=> new Date(from.createdAt) - new Date(to.createdAt))}
+                    case 'date-desc':
+                        return {todoItems: newList.sort((from, to)=> new Date(to.createdAt) - new Date(from.createdAt))}
+                    default:
+                        return state;
+                }
             case 'FILTER':
                 switch (action.payload.fType){
                     case 'completed':
@@ -95,12 +102,12 @@ export default function TaskBoard(){
 
                 <button onClick={(e)=>{
                     e.preventDefault();
-                    dispatch({payload:{type:'SORT', sType: 'asc'}})
+                    dispatch({payload:{type:'SORT', sType: 'date-asc'}})
                 }}>SORT up</button>
 
                 <button onClick={(e)=>{
                     e.preventDefault();
-                    dispatch({payload:{type:'SORT', sType: 'desc'}})
+                    dispatch({payload:{type:'SORT', sType: 'date-desc'}})
                 }}>SORT down</button>
             </div>
             {todoItemsList}
