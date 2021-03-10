@@ -21,7 +21,7 @@ export default function ToDoItem(props){
     }
     return(
         <div style={styleItem}>
-            <p>{task.id} - {task.employeeName}</p>
+            <p>{task.id} - {task.employeeName} : {task.createdAt}</p>
             <p>isCompleted: {task.isCompleted ? 'tak' : 'nie'}</p>
             <p>isShowing: {task.isShowing ? 'tak' : 'nie'}</p>
 
@@ -31,7 +31,12 @@ export default function ToDoItem(props){
                 props.taskActions({payload:{type:'COMPLETED', id: task.id, mark: !task.isCompleted}})
             }}>Zakończ</button>
 
-            <button>Usuń</button>
+            <button
+                onClick={(e)=>{
+                    e.preventDefault();
+                    props.taskActions({payload:{type:'REMOVE', id: task.id}})
+                }}
+            >Usuń</button>
         </div>
     )
 }

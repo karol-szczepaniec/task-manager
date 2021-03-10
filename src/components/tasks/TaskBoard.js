@@ -22,7 +22,7 @@ export default function TaskBoard(){
             {
                 id: 2,
                 isCompleted: true,
-                createdAt: '2021-03-08',
+                createdAt: '2021-03-09',
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
                 assignedEmployeeId: 'id: 22',
                 isShowing: true,
@@ -41,24 +41,68 @@ export default function TaskBoard(){
             case 'COMPLETED':
                 newList[itemIndex].isCompleted = action.payload.mark;
                 return {todoItems:newList};
-            case 'Filter':
-                return state;
             case 'ADD':
                 return state;
             case 'REMOVE':
+                return {todoItems: newList.filter(i=> i.id != action.payload.id)}
+            case 'SORT':
                 return state;
+            case 'FILTER':
+                switch (action.payload.fType){
+                    case 'completed':
+                        newList.map(i=>{
+                            i.isCompleted ? i.isShowing = true : i.isShowing = false;
+                        })
+                        return {todoItems: newList};
+                    case 'uncompleted':
+                        newList.map(i=>{
+                            !i.isCompleted ? i.isShowing = true : i.isShowing = false;
+                        })
+                        return {todoItems: newList};
+                    case 'all':
+                    default:
+                        newList.map(i=>{
+                            i.isShowing = true;
+                        })
+                        return {todoItems: newList};
+                }
             default:
                 return state;
         }
     }
 
     const todoItemsList = todoItems.todoItems.map(item=>
-        <ToDoItem key={item.id} item={item} taskActions={dispatch}/>
-        )
+        <ToDoItem key={item.id} item={item} taskActions={dispatch}/>)
 
     return(
         <div>
-            <div>okruszki ... i akcje filtowania</div>
+            <div>okruszki ... i akcje filtowania
+
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    dispatch({payload:{type:'FILTER', fType: 'all'}})
+                }}>POKAŻ WSZYTSKIE</button>
+
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    dispatch({payload:{type:'FILTER', fType: 'completed'}})
+                }}>POKAŻ UKOŃCZONE</button>
+
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    dispatch({payload:{type:'FILTER', fType: 'uncompleted'}})
+                }}>POKAŻ NIEUKOŃCZONE</button>
+
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    dispatch({payload:{type:'SORT', sType: 'asc'}})
+                }}>SORT up</button>
+
+                <button onClick={(e)=>{
+                    e.preventDefault();
+                    dispatch({payload:{type:'SORT', sType: 'desc'}})
+                }}>SORT down</button>
+            </div>
             {todoItemsList}
         </div>
     )
