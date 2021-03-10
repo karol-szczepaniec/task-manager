@@ -1,5 +1,7 @@
 import React, {useReducer} from "react";
 import ToDoItem from "./TodoItem";
+import AddTodoItem from "./AddTodoItem";
+import TaskBoardHeader from "./TaskBoardHeader";
 
 export default function TaskBoard(){
 
@@ -11,21 +13,25 @@ export default function TaskBoard(){
         todoItems: [
             {
                 id: 1,
+                _uid: '780cysedh',
                 isCompleted: false,
-                createdAt: '2021-03-08',
+                createdAt: '2021-03-09 10:00:23',
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
                 assignedEmployeeId: 'id: 11',
                 isShowing: true,
+                // ony for test
                 employeeName: "Mateusz Wiśniewski",
                 employeeIng: "jeden"
             },
             {
                 id: 2,
+                _uid: 'nchpe87c',
                 isCompleted: true,
-                createdAt: '2021-03-09',
+                createdAt: '2020-01-22 12:34:55',
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
                 assignedEmployeeId: 'id: 22',
                 isShowing: true,
+                // only for test
                 employeeName: "Łukasz Walewski",
                 employeeIng: "dwa"
             },
@@ -34,31 +40,59 @@ export default function TaskBoard(){
 
     function todoReducer(state, action){
         const itemIndex = state.todoItems.findIndex(i=> i.id == action.payload.id)
+        const currentStates = state.info;
         //const newList = state.todoItems.map( (item) => ({...item}));
         const newList = state.todoItems.slice();
 
         switch(action.payload.type){
             case 'COMPLETED':
                 newList[itemIndex].isCompleted = action.payload.mark;
-                return {todoItems:newList};
+                return {info:{
+                        itemsAmount: currentStates.itemsAmount,
+                        itemsMarked: newList[itemIndex].isCompleted ? currentStates.itemsMarked+1 : currentStates.itemsMarked-1,
+                    },todoItems:newList};
             case 'ADD':
-                return state;
-            case 'REMOVE':
-                let iAmount = state.info.itemsAmount;
-                let iMarked = state.info.itemsMarked;
-            return {
-                info:{
-                    itemsAmount: --iAmount,
-                    itemsMarked: newList[itemIndex].isCompleted ?  --iMarked : iMarked,
-                },
-                todoItems: newList.filter(i=> i.id != action.payload.id),
+                let randomUid =Math.random().toString(36).substring(2);
+                let lastId = Math.max.apply(Math,newList.map(i=>i.id))
+                let currentTime = new Date();
+                function addZero(n){
+                    if(n<=9){
+                        return "0"+n;
+                    }else{
+                        return n;
+                    }
+                }
+                currentTime = currentTime.getFullYear()+"-"+addZero(currentTime.getMonth()+1)+"-"+addZero(currentTime.getDate()) +"  "+addZero(currentTime.getHours())+":"+addZero(currentTime.getMinutes())+":"+addZero(currentTime.getSeconds());
+                let newItem = {
+                id: lastId+1,
+                _uid: randomUid,
+                isCompleted: false,
+                createdAt: currentTime,
+                contentText: action.payload.newItem.contentText,
+                assignedEmployeeId: action.payload.newItem.assignedEmployeeId,
+                isShowing: true,
+                // only for test
+                employeeName: "Łukasz Walewski",
             }
+                newList.push(newItem)
+                return {
+                    info:{
+                        itemsAmount: currentStates.itemsAmount+1,
+                        itemsMarked: currentStates.itemsMarked,
+                    },
+                    todoItems: newList,
+                }
+            case 'REMOVE':
+            return {info: {
+                itemsAmount: currentStates.itemsAmount-1,
+                itemsMarked: newList[itemIndex].isCompleted ?  currentStates.itemsMarked-1 : currentStates.itemsMarked,
+                }, todoItems: newList.filter(i=> i.id != action.payload.id)}
             case 'SORT':
                 switch (action.payload.sType){
                     case 'date-asc':
-                        return {todoItems: newList.sort((from, to)=> new Date(from.createdAt) - new Date(to.createdAt))}
+                        return {info: currentStates,todoItems: newList.sort((from, to)=> new Date(from.createdAt) - new Date(to.createdAt))}
                     case 'date-desc':
-                        return {todoItems: newList.sort((from, to)=> new Date(to.createdAt) - new Date(from.createdAt))}
+                        return {info: currentStates,todoItems: newList.sort((from, to)=> new Date(to.createdAt) - new Date(from.createdAt))}
                     default:
                         return state;
                 }
@@ -68,18 +102,18 @@ export default function TaskBoard(){
                         newList.map(i=>{
                             i.isCompleted ? i.isShowing = true : i.isShowing = false;
                         })
-                        return {todoItems: newList};
+                        return {info: currentStates, todoItems: newList};
                     case 'uncompleted':
                         newList.map(i=>{
                             !i.isCompleted ? i.isShowing = true : i.isShowing = false;
                         })
-                        return {todoItems: newList};
+                        return {info: currentStates, todoItems: newList};
                     case 'all':
                     default:
                         newList.map(i=>{
                             i.isShowing = true;
                         })
-                        return {todoItems: newList};
+                        return {info: currentStates, todoItems: newList};
                 }
             default:
                 return state;
@@ -87,7 +121,7 @@ export default function TaskBoard(){
     }
 
     const todoItemsList = todoItems.todoItems.map(item=>
-        <ToDoItem key={item.id} item={item} taskActions={dispatch}/>)
+        <ToDoItem key={item._uid} item={item} taskActions={dispatch}/>)
 
     //TODO add modal onTaskClick, show details
     // !important if(isShowing)=> display task
@@ -95,45 +129,22 @@ export default function TaskBoard(){
     // Task Board divided by 3 left center right, on left AddTask => nextStep addTask Modal?
     // center tasks items
     // on right states of tasks : tasks amount & completed & uncompleted
+    // default sort list by createdAt desc
 
 
     return(
         <div>
-            <div>
-                sticky header
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    dispatch({payload:{type:'FILTER', fType: 'all'}})
-                }}>SHOW ALL</button>
-
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    dispatch({payload:{type:'FILTER', fType: 'completed'}})
-                }}>SHOW COMPLETED</button>
-
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    dispatch({payload:{type:'FILTER', fType: 'uncompleted'}})
-                }}>SHOW UNCOMPLETED</button>
-
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    dispatch({payload:{type:'SORT', sType: 'date-asc'}})
-                }}>SORT up</button>
-
-                <button onClick={(e)=>{
-                    e.preventDefault();
-                    dispatch({payload:{type:'SORT', sType: 'date-desc'}})
-                }}>SORT down</button>
-            </div>
+            <TaskBoardHeader actions={dispatch}/>
             {todoItemsList}
-
+            <hr/>
             <div>
-                Status Bar
+                <h4>Status Bar</h4>
                 <p>total task amount: {todoItems.info.itemsAmount}</p>
                 <p>completed tasks: {todoItems.info.itemsMarked}</p>
                 <p>incompleted task tasks: {todoItems.info.itemsAmount - todoItems.info.itemsMarked}</p>
             </div>
+            <hr/>
+            <AddTodoItem addTodoItem={dispatch}/>
         </div>
     )
 }
