@@ -62,7 +62,7 @@ export default function TaskBoard(){
                         return n;
                     }
                 }
-                currentTime = currentTime.getFullYear()+"-"+addZero(currentTime.getMonth()+1)+"-"+addZero(currentTime.getDate()) +"  "+addZero(currentTime.getHours())+":"+addZero(currentTime.getMinutes())+":"+addZero(currentTime.getSeconds());
+                currentTime = currentTime.getFullYear()+"-"+addZero(currentTime.getMonth()+1)+"-"+addZero(currentTime.getDate()) +" "+addZero(currentTime.getHours())+":"+addZero(currentTime.getMinutes())+":"+addZero(currentTime.getSeconds());
                 let newItem = {
                 id: lastId+1,
                 _uid: randomUid,
@@ -90,9 +90,13 @@ export default function TaskBoard(){
             case 'SORT':
                 switch (action.payload.sType){
                     case 'date-asc':
-                        return {info: currentStates,todoItems: newList.sort((from, to)=> new Date(from.createdAt) - new Date(to.createdAt))}
+                        console.log(newList.forEach(i=>i.createdAt))
+                        newList.sort((from, to)=> new Date(from.createdAt) - new Date(to.createdAt))
+                        console.log(newList)
+                        return {info: currentStates,todoItems: newList}
                     case 'date-desc':
-                        return {info: currentStates,todoItems: newList.sort((from, to)=> new Date(to.createdAt) - new Date(from.createdAt))}
+                        todoItems: newList.sort((from, to)=> new Date(to.createdAt) - new Date(from.createdAt))
+                        return {info: currentStates, todoItems: newList}
                     default:
                         return state;
                 }
