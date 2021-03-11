@@ -5,7 +5,7 @@ import UserForm from "./UserForm";
 
 export default function UserList(){
 
-    let {usersList, dispatch} = useUserContext();
+    const {usersList, dispatch} = useUserContext();
 
     const uList = usersList.users.map(u=><UserItem key={u._uid} user={u}/>)
 

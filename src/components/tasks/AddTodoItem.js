@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {InputGroup} from "react-bootstrap";
+import SearchSelectUser from "./SearchSelectUser";
 
 export default function AddTodoItem(props){
     const [item, setItem] = useState(
@@ -25,12 +25,22 @@ export default function AddTodoItem(props){
         }
     }
 
-    //TODO searchSelect with employees
+    function assignUser(uId){
+        //TODO if user id ==0 -> validate error?
+        let newItem = {
+            contentText: item.contentText,
+            assignedEmployeeId: uId,
+        }
+        setItem(newItem)
+    }
 
     return(
         <div>
         <h4>Add Task</h4>
-        <label>Search Select with employy list</label>
+
+        <SearchSelectUser assignUser={assignUser}/>
+
+        <br/>
             <p>Type task text</p>
             <textarea placeholder="Type task content..."
                       value={item.contentText}
@@ -39,7 +49,7 @@ export default function AddTodoItem(props){
                       if(e.target.value.length <= 124){
                           let newItem = {
                               contentText: e.target.value,
-                              assignedEmployeeId: 'id: 44',
+                              assignedEmployeeId: item.assignedEmployeeId,
                           }
                           setItem(newItem);
                       }

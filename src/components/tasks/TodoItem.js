@@ -8,9 +8,6 @@ export default function ToDoItem(props){
         createdAt: props.item.createdAt,
         contentText: props.item.contentText,
         assignedEmployeeId: props.item.assignedEmployeeId,
-
-        employeeName: props.item.employeeName,
-        employeeIng: props.item.employeeIng,
     }
 
     const styleItem = {
@@ -21,7 +18,8 @@ export default function ToDoItem(props){
     }
     return(
         <div style={styleItem}>
-            <p>{task.id} - {task.employeeName} : {task.createdAt}</p>
+            <p>{task.id} - userName : {task.createdAt}</p>
+            <div>{task.assignedEmployeeId ? <p>{task.assignedEmployeeId}</p> : <p>Task without user</p>}</div>
             <p>isCompleted: {task.isCompleted ? 'tak' : 'nie'}</p>
             <p>isShowing: {task.isShowing ? 'tak' : 'nie'}</p>
 

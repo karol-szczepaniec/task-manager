@@ -20,9 +20,6 @@ export default function TaskBoard(){
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
                 assignedEmployeeId: 'id: 11',
                 isShowing: true,
-                // ony for test
-                employeeName: "Mateusz Wiśniewski",
-                employeeIng: "jeden"
             },
             {
                 id: 2,
@@ -32,9 +29,6 @@ export default function TaskBoard(){
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
                 assignedEmployeeId: 'id: 22',
                 isShowing: true,
-                // only for test
-                employeeName: "Łukasz Walewski",
-                employeeIng: "dwa"
             },
         ]
     })
@@ -72,8 +66,6 @@ export default function TaskBoard(){
                 contentText: action.payload.newItem.contentText,
                 assignedEmployeeId: action.payload.newItem.assignedEmployeeId,
                 isShowing: true,
-                // only for test
-                employeeName: "Łukasz Walewski",
             }
                 newList.push(newItem)
                 return {
