@@ -19,7 +19,10 @@ export default function ToDoItem(props){
     return(
         <div style={styleItem}>
             <p>{task.id} - userName : {task.createdAt}</p>
-            <div>{task.assignedEmployeeId ? <p>{task.assignedEmployeeId}</p> : <p>Task without user</p>}</div>
+            <div>{task.assignedEmployeeId ?
+                <p>{task.assignedEmployeeId}</p> :
+                <p>Task without user</p>}
+            </div>
             <p>isCompleted: {task.isCompleted ? 'tak' : 'nie'}</p>
             <p>isShowing: {task.isShowing ? 'tak' : 'nie'}</p>
 

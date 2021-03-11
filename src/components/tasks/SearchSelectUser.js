@@ -9,7 +9,7 @@ export default function SearchSelectUser(props){
 
     return(
         <div>
-            <select className="selectpicker" selected={'07yrhfu07y'} onChange={(e)=>{
+            <select className="selectpicker" onChange={(e)=>{
                 props.assignUser(e.target.value);
 
             }}>
