@@ -2,6 +2,7 @@ import React from "react";
 import {useUserContext} from "../common/UserContext";
 import UserItem from "./UserItem";
 import UserForm from "./UserForm";
+import {Jumbotron} from "react-bootstrap";
 
 export default function UserList(){
 
@@ -11,9 +12,15 @@ export default function UserList(){
 
     //TODO sort by createdAt?
     return(
-        <div>
-            <h3>Users List</h3>
-            ->popUp the modal <button>add new User</button>
+        <div className={'container-fluid p-0'}>
+            <div className={'bg-light p-4 d-flex'}>
+                <div className={'col-md-6 text-left'}>
+                    <h3>Users List</h3>
+                </div>
+                <div className={'col-md-6 text-right'}>
+                    <button className={'btn btn-primary'}>add new User</button>
+                </div>
+            </div>
             <br/>
             {uList}
             <hr/>
