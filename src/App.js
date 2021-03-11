@@ -1,15 +1,17 @@
 import React from "react";
-import Dashboard from "./components/Dashboard";
-import SideBar from "./components/SideBar";
-import About from "./components/About";
-import UserList from "./components/UserList";
+import Dashboard from "./components/dashboard/Dashboard";
+import SideBar from "./components/common/SideBar";
+import About from "./components/about/About";
+import UserList from "./components/users/UserList";
 import TaskBoard from "./components/tasks/TaskBoard";
+import UserProvider from "./components/common/UserContext";
 
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 
 export default function App() {
   return (
     <div className="App">
+        <UserProvider>
         <Router>
             <SideBar>
             <nav>
@@ -28,6 +30,7 @@ export default function App() {
                 <Route path="/" component={Dashboard}/>
             </Switch>
         </Router>
+        </UserProvider>
     </div>
   );
 }

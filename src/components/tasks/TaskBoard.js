@@ -2,6 +2,7 @@ import React, {useReducer} from "react";
 import ToDoItem from "./TodoItem";
 import AddTodoItem from "./AddTodoItem";
 import TaskBoardHeader from "./TaskBoardHeader";
+import StatusBar from "./StatusBar";
 
 export default function TaskBoard(){
 
@@ -141,12 +142,7 @@ export default function TaskBoard(){
             <TaskBoardHeader actions={dispatch}/>
             {todoItemsList}
             <hr/>
-            <div>
-                <h4>Status Bar</h4>
-                <p>total task amount: {todoItems.info.itemsAmount}</p>
-                <p>completed tasks: {todoItems.info.itemsMarked}</p>
-                <p>incompleted task tasks: {todoItems.info.itemsAmount - todoItems.info.itemsMarked}</p>
-            </div>
+            <StatusBar info={todoItems.info}/>
             <hr/>
             <AddTodoItem addTodoItem={dispatch}/>
         </div>

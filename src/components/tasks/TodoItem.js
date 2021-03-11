@@ -15,7 +15,7 @@ export default function ToDoItem(props){
 
     const styleItem = {
         margin: "50px",
-        backgroundColor: "gray",
+        backgroundColor: "lightgray",
         padding: "10px",
         width: "400px"
     }
