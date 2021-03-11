@@ -6,6 +6,8 @@ export default function UserItem(props){
     // add user
     // show user details in modal form (on click)
     // modal confirm if you try remove user
+    // edit button trigger UserForm modal with type=edit
+    // remove from modal too
 
     const styleItem = {
         margin: "50px",
@@ -18,6 +20,7 @@ export default function UserItem(props){
     return(
         <div style={styleItem}>
             <p>id: {user.id} - {user.name}</p>
+            <button>edit</button>
         </div>
     )
 }

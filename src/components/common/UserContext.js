@@ -38,8 +38,43 @@ export default function UserProvider(props){
     })
 
     function userReducer(state, action){
-        //add and remove users
-        return state;
+        //console.log(action.payload.type)
+        let newList = state.users.slice();
+        const index = newList.findIndex(u=> u.id == action.payload.item.id)
+        switch(action.payload.type){
+            case 'ADD_USER':
+                let randomUid =Math.random().toString(36).substring(2);
+                let lastId = Math.max.apply(Math,newList.map(i=>i.id));
+                let currentTime = new Date();
+                function addZero(n){
+                    if(n<=9){
+                        return "0"+n;
+                    }else{
+                        return n;
+                    }
+                }
+                currentTime = currentTime.getFullYear()+"-"+addZero(currentTime.getMonth()+1)+"-"+addZero(currentTime.getDate()) +" "+addZero(currentTime.getHours())+":"+addZero(currentTime.getMinutes())+":"+addZero(currentTime.getSeconds());
+                const newUser = {
+                    id: lastId+1,
+                    _uid: randomUid,
+                    name: action.payload.item.name,
+                    createdAt: currentTime,
+                    email: action.payload.item.email,
+                    workplace: action.payload.item.workplace,
+                    isAdmin: false,
+                }
+                newList.push(newUser);
+                return {users:newList}
+
+            case 'EDIT_USER':
+                newList[index] = action.payload.item;
+                return {users: newList};
+            case 'REMOVE_USER':
+                newList = newList.filter(u=> u._uid != action.payload.item._uid);
+                return {users: newList}
+            default:
+                return state;
+        }
     }
 
     return(
@@ -48,5 +83,4 @@ export default function UserProvider(props){
         </UserContext.Provider>
     )
 }
-
 export const useUserContext = () => useContext(UserContext);
