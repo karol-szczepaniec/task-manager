@@ -15,6 +15,7 @@ export default function UserList(){
     const uList = usersList.users.map(u=><UserItem key={u._uid} user={u}/>)
 
     //TODO sort by createdAt?
+    // user states
     return(
         <div className={'container-fluid p-0'}>
             <Row className={'bg-light p-4 d-flex'}>

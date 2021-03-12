@@ -28,7 +28,8 @@ export default function UserFormModal(props){
 
 
     function userAction(actionType){
-        //TODO validation data?
+        //TODO validation input data?
+        // rollback changes if edit user don't save
         switch (actionType){
             case 'ADD_USER':
                 dispatch({payload:{type: actionType, item: user,}})

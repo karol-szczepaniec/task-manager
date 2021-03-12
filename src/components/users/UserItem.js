@@ -17,7 +17,7 @@ export default function UserItem(props){
         <Card className={'m-5 w-75'}>
             <Card.Header>#{user.id}</Card.Header>
             <Card.Body>
-                <Card.Title>{user.name}</Card.Title>
+                <Card.Title className={'mb-4'}>{user.name}</Card.Title>
                 <Card.Subtitle className={'mb-2 text-muted'}>{user.workplace}</Card.Subtitle>
                 <Card.Text>
                     <p>{user.email}</p>
