@@ -8,7 +8,7 @@ export default function Dashboard(){
                 <Container>
                     <h1 className={'text-center mt-2'}>Welcome to Task manager app</h1>
                     <p className={'mt-5'}>
-                        This is a Todo app with couple features...
+                        <span>This is a Todo app with couple features...</span>
                     </p>
                 </Container>
             </Jumbotron>

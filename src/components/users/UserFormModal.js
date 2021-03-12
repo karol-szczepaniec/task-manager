@@ -45,6 +45,18 @@ export default function UserFormModal(props){
         }
     }
 
+    function clearForm(){
+        setUser({
+            id: 0,
+            _uid: 0,
+            name: '',
+            createdAt: '',
+            email: '',
+            workplace: '',
+            isAdmin: false,
+        })
+    }
+
     function changeData(newValue, type){
         const newData = user;
         switch (type){
@@ -195,20 +207,13 @@ export default function UserFormModal(props){
                 <>
                     <Button variant={'primary'} onClick={(e)=>{
                         e.preventDefault();
-                        setUser({
-                            id: 0,
-                            _uid: 0,
-                            name: '',
-                            createdAt: '',
-                            email: '',
-                            workplace: '',
-                            isAdmin: false,
-                        })
+                        clearForm();
                     }}>clear form</Button>
                 <Button variant={'success'} onClick={(e)=>{
                     e.preventDefault();
                     userAction('ADD_USER');
-                    props.onHide()
+                    props.onHide();
+                    clearForm();
                 }}>add New user</Button>
                 </>
             }
