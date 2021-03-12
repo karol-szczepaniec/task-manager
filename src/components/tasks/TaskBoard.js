@@ -131,7 +131,7 @@ export default function TaskBoard(){
     // Add new task modal?
 
     return(
-        <Container fluid className={'p-0'}>
+        <Container fluid className={'m-0'}>
             <TaskBoardHeader actions={dispatch}/>
             <Row>
                 <Col md={8}>

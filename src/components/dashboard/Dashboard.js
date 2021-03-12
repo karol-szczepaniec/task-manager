@@ -1,10 +1,17 @@
 import React from "react";
-import { Button } from 'react-bootstrap';
+import {Jumbotron, Container} from 'react-bootstrap';
 
 export default function Dashboard(){
     return(
-        <div className={'container-fluid'}>
-            <h1 className={'text-center mt-5'}>Wellcome to Task manager app</h1>
-        </div>
+        <Container fluid className={'p-0'}>
+            <Jumbotron fluid>
+                <Container>
+                    <h1 className={'text-center mt-2'}>Welcome to Task manager app</h1>
+                    <p className={'mt-5'}>
+                        This is a Todo app with couple features...
+                    </p>
+                </Container>
+            </Jumbotron>
+        </Container>
     )
 }

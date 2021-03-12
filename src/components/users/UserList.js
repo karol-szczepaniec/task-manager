@@ -17,8 +17,8 @@ export default function UserList(){
     //TODO sort by createdAt?
     // user states
     return(
-        <Container fluid className={'p-0'}>
-            <Row className={'bg-light p-4 sticky-top ml-2'}>
+        <Container fluid className={'m-0'}>
+            <Row className={'bg-light p-4 sticky-top border-bottom border-secondary'}>
                 <Col md={3} className={'text-left'}>
                     <h3>Users List</h3>
                 </Col>
