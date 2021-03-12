@@ -14,7 +14,7 @@ export default function ToDoItem(props){
     //TODO add assigned user to card
 
     return(
-        <Card className={'m-5 w-75'}>
+        <Card className={'m-5'}>
             <Card.Header className={task.isCompleted ? "bg-success" : null}>#{task.id}</Card.Header>
             <Card.Body>
                 <Card.Title>

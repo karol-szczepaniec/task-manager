@@ -1,10 +1,12 @@
 import React from "react";
 import {Badge, Button, Card, Col, Row} from "react-bootstrap"
+import {useHistory} from "react-router-dom";
 
 export default function StatusBar(props){
     let info = props.info;
+    let history = useHistory();
     return(
-        <Card className={'mt-5 mr-3'}>
+        <Card className={'mt-5 mr-3 position-fixed'}>
             <Card.Header className={'text-center'}>Tasks status</Card.Header>
             <Card.Body>
                 <h2 className={'w-100'}>
@@ -52,7 +54,10 @@ export default function StatusBar(props){
 
             </Card.Body>
             <Card.Footer className={'bg-white text-center border-white'}>
-                <Button variant={'info'} size={'sm'}>add new task</Button>
+                <Button variant={'info'} size={'sm'} onClick={(e)=>{
+                    e.preventDefault();
+                    props.modalHandler();
+                }}>add new task</Button>
             </Card.Footer>
         </Card>
     )

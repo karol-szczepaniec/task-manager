@@ -5,6 +5,7 @@ import About from "./components/about/About";
 import UserList from "./components/users/UserList";
 import TaskBoard from "./components/tasks/TaskBoard";
 import UserProvider from "./components/common/UserContext";
+import AddTodoItemModal from "./components/tasks/AddTodoItemModal";
 
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 

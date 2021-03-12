@@ -18,7 +18,7 @@ export default function UserList(){
     // user states
     return(
         <Container fluid className={'p-0'}>
-            <Row className={'bg-light p-4'}>
+            <Row className={'bg-light p-4 sticky-top ml-2'}>
                 <Col md={3} className={'text-left'}>
                     <h3>Users List</h3>
                 </Col>

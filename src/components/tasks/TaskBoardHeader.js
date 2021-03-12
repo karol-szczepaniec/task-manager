@@ -7,7 +7,7 @@ export default function TaskBoardHeader(props){
     let action = props.actions;
 
     return(
-        <Row className={'bg-light p-4 d-flex'}>
+        <Row className={'bg-light p-4 sticky-top ml-2'}>
             <Col md={3} className={'text-left'}>
                 <h3>Tasks List</h3>
             </Col>

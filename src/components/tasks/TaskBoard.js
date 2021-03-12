@@ -1,12 +1,13 @@
-import React, {useReducer} from "react";
+import React, {useReducer, useState} from "react";
 import ToDoItem from "./TodoItem";
-import AddTodoItem from "./AddTodoItem";
+import AddTodoItemModal from "./AddTodoItemModal";
 import TaskBoardHeader from "./TaskBoardHeader";
 import StatusBar from "./StatusBar";
 import {Container, Row, Col} from "react-bootstrap";
 
 export default function TaskBoard(){
 
+    const [modalShow, setModalShow] = useState(false)
     const [todoItems, dispatch] = useReducer(todoReducer,{
         info: {
             itemsAmount: 2,
@@ -129,7 +130,6 @@ export default function TaskBoard(){
     // addTask Modal? to can edit task and change user?
     // Add new task modal?
 
-
     return(
         <Container fluid className={'p-0'}>
             <TaskBoardHeader actions={dispatch}/>
@@ -138,11 +138,11 @@ export default function TaskBoard(){
                     {todoItemsList}
                 </Col>
                 <Col md={4}>
-                    <StatusBar info={todoItems.info}/>
-                    <hr/>
-                    <AddTodoItem addTodoItem={dispatch}/>
+                    <StatusBar info={todoItems.info} modalHandler={()=>setModalShow(true)}/>
+                    {/*<AddTodoItem addTodoItem={dispatch}/>*/}
                 </Col>
             </Row>
+            <AddTodoItemModal show={modalShow} onHide={()=>setModalShow(false)} addTodoItem={dispatch}/>
         </Container>
     )
 }
