@@ -3,6 +3,7 @@ import ToDoItem from "./TodoItem";
 import AddTodoItem from "./AddTodoItem";
 import TaskBoardHeader from "./TaskBoardHeader";
 import StatusBar from "./StatusBar";
+import {Container, Row, Col} from "react-bootstrap";
 
 export default function TaskBoard(){
 
@@ -118,25 +119,30 @@ export default function TaskBoard(){
     }
 
     const todoItemsList = todoItems.todoItems.map(item=>
-        <ToDoItem key={item._uid} item={item} taskActions={dispatch}/>)
+    { return (item.isShowing ?
+        <ToDoItem key={item._uid} item={item} taskActions={dispatch}/>
+        : null)
+    })
 
     //TODO add modal onTaskClick, show details
-    // !important if(isShowing)=> display task
     // !important add case when list isEmpty
-    // Task Board divided by 3 left center right, on left AddTask => nextStep addTask Modal?
-    // center tasks items
-    // on right states of tasks : tasks amount & completed & uncompleted
-    // default sort list by createdAt desc
+    // addTask Modal? to can edit task and change user?
+    // Add new task modal?
 
 
     return(
-        <div>
+        <Container fluid className={'p-0'}>
             <TaskBoardHeader actions={dispatch}/>
-            {todoItemsList}
-            <hr/>
-            <StatusBar info={todoItems.info}/>
-            <hr/>
-            <AddTodoItem addTodoItem={dispatch}/>
-        </div>
+            <Row>
+                <Col md={8}>
+                    {todoItemsList}
+                </Col>
+                <Col md={4}>
+                    <StatusBar info={todoItems.info}/>
+                    <hr/>
+                    <AddTodoItem addTodoItem={dispatch}/>
+                </Col>
+            </Row>
+        </Container>
     )
 }

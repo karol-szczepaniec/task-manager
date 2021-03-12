@@ -1,4 +1,5 @@
 import React from "react";
+import {Card, Button} from "react-bootstrap";
 
 export default function ToDoItem(props){
     let task ={
@@ -10,34 +11,45 @@ export default function ToDoItem(props){
         assignedEmployeeId: props.item.assignedEmployeeId,
     }
 
-    const styleItem = {
-        margin: "50px",
-        backgroundColor: "lightgray",
-        padding: "10px",
-        width: "400px"
-    }
+    //TODO add assigned user to card
+
     return(
-        <div style={styleItem}>
-            <p>{task.id} - userName : {task.createdAt}</p>
-            <div>{task.assignedEmployeeId ?
-                <p>{task.assignedEmployeeId}</p> :
-                <p>Task without user</p>}
-            </div>
-            <p>isCompleted: {task.isCompleted ? 'tak' : 'nie'}</p>
-            <p>isShowing: {task.isShowing ? 'tak' : 'nie'}</p>
+        <Card className={'m-5 w-75'}>
+            <Card.Header className={task.isCompleted ? "bg-success" : null}>#{task.id}</Card.Header>
+            <Card.Body>
+                <Card.Title>
+                    {task.assignedEmployeeId ? "assigned user" : "Task without user"}
+                </Card.Title>
+                <Card.Subtitle className={'mb-2 text-muted'}>
+                    {task.createdAt}
+                </Card.Subtitle>
+                <Card.Text>
+                    {task.contentText}
+                </Card.Text>
+            </Card.Body>
 
-            <button
-                onClick={(e)=>{
-                e.preventDefault();
-                props.taskActions({payload:{type:'COMPLETED', id: task.id, mark: !task.isCompleted}})
-            }}>Zakończ</button>
-
-            <button
-                onClick={(e)=>{
-                    e.preventDefault();
-                    props.taskActions({payload:{type:'REMOVE', id: task.id}})
-                }}
-            >Usuń</button>
-        </div>
+            <Card.Footer className={'text-right'}>
+                <Button variant={'danger'} size={'sm'} className={'mr-3'}
+                    onClick={(e)=>{
+                        e.preventDefault();
+                        props.taskActions({payload:{type:'REMOVE', id: task.id}})
+                    }}
+                >remove</Button>
+                <>{!task.isCompleted ?
+                    <Button variant={'success'} size={'sm'}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                props.taskActions({payload: {type: 'COMPLETED', id: task.id, mark: !task.isCompleted}})
+                            }}>finish</Button>:
+                    <Button variant={'warning'} size={'sm'}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                props.taskActions({payload: {type: 'COMPLETED', id: task.id, mark: !task.isCompleted}})
+                            }}>undo</Button>
+                }
+                </>
+            </Card.Footer>
+        </Card>
     )
+
 }
