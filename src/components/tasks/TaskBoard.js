@@ -139,17 +139,13 @@ export default function TaskBoard(){
         : null)
     })
 
-    //TODO add modal onTaskClick, show details
-    // !important add case when list isEmpty
-    // addTask Modal? to can edit task and change user?
-    // Add new task modal?
 
     return(
         <Container fluid className={'m-0'}>
             <TaskBoardHeader actions={dispatch}/>
             <Row>
                 <Col md={8}>
-                    {todoItemsList}
+                    {todoItemsList.length <1 ? <h3 className={'mt-5 text-center'}>There are no tasks...</h3> : todoItemsList}
                 </Col>
                 <Col md={4}>
                     <StatusBar info={todoItems.info} modalHandler={()=>setModalShow(true)}/>

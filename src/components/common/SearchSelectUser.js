@@ -3,7 +3,6 @@ import {useUserContext} from "./UserContext";
 import {Card, Dropdown, FormControl} from "react-bootstrap";
 
 export default function SearchSelectUser(props){
-    //todo use on add task card -> then remove lod ver. searchSelect
 
     const {usersList, dispatch} = useUserContext();
 
@@ -64,8 +63,13 @@ export default function SearchSelectUser(props){
                     />
                     <ul className="list-unstyled">
                         {React.Children.toArray(children).filter(
-                            (child) =>
-                                !value || child.props.children.toLowerCase().startsWith(value),
+                            (child) =>{
+                                return(
+                                    !value || child.props.children[1].toLowerCase().startsWith(value)
+                                )
+                            }
+
+
                         )}
                     </ul>
                 </div>

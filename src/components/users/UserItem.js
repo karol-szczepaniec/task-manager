@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import UserFormModal from "./UserFormModal";
-import {Button, Card, Row} from "react-bootstrap"
+import {Button, Card, Dropdown, Row} from "react-bootstrap"
 
 export default function UserItem(props){
     const user = props.user;
@@ -17,7 +17,12 @@ export default function UserItem(props){
         <Card className={'m-5 w-75'}>
             <Card.Header>#{user.id}</Card.Header>
             <Card.Body>
-                <Card.Title className={'mb-4'}>{user.name}</Card.Title>
+                <Card.Title className={'mb-4'}>
+                 <span style={{backgroundColor:"#343a40", borderRadius: "50%", color:"white", width: "45px", height: "45px", display:"inline-block", textAlign:"center", fontSize:"small", paddingTop:"15px", marginRight:"10px"}}>
+                {`${user.name.split(/(?<=^\S+)\s/)[0].charAt(0) + (user.name.split(/(?<=^\S+)\s/).length >=2 ? user.name.split(/(?<=^\S+)\s/)[1].charAt(0) : "")}`}
+                </span>
+                    {user.name}
+                </Card.Title>
                 <Card.Subtitle className={'mb-2 text-muted'}>{user.workplace}</Card.Subtitle>
                 <Card.Text>
                     <p>{user.email}</p>

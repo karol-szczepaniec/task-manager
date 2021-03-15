@@ -6,7 +6,7 @@ import {HouseFill, InfoCircleFill, KanbanFill, PeopleFill} from "react-bootstrap
 export default function SideBar(props){
     return(
         <Navbar bg={'dark'} className={'w-25 mh-100 flex-column p-0 m-0'}>
-            <Navbar.Brand href={'/dashboard'} className={'w-100 text-center mb-5'}>
+            <Navbar.Brand href={'/dashboard'} className={'w-100 text-center mb-5 '}>
                 <h1 className={'text-primary'}>
                     Task Todo
                 </h1>
