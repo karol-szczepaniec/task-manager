@@ -1,9 +1,13 @@
 import React from "react";
-import {Card, Button} from "react-bootstrap";
+import {Card, Button, Dropdown} from "react-bootstrap";
+import SearchSelectUser from "../common/SearchSelectUser";
 
 export default function ToDoItem(props){
+
+
     let task ={
         id: props.item.id,
+        _uid: props.item._uid,
         isCompleted : props.item.isCompleted,
         isShowing: props.item.isShowing,
         createdAt: props.item.createdAt,
@@ -11,14 +15,15 @@ export default function ToDoItem(props){
         assignedEmployeeId: props.item.assignedEmployeeId,
     }
 
-    //TODO add assigned user to card
 
     return(
         <Card className={'m-5'}>
             <Card.Header className={task.isCompleted ? "bg-success" : null}>#{task.id}</Card.Header>
             <Card.Body>
                 <Card.Title>
-                    {task.assignedEmployeeId ? "assigned user" : "Task without user"}
+
+                <SearchSelectUser currentTask={task} taskActions={props.taskActions}/>
+
                 </Card.Title>
                 <Card.Subtitle className={'mb-2 text-muted'}>
                     {task.createdAt}

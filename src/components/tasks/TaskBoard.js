@@ -20,7 +20,7 @@ export default function TaskBoard(){
                 isCompleted: false,
                 createdAt: '2021-03-09 10:00:23',
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
-                assignedEmployeeId: 'id: 11',
+                assignedEmployeeId: 'c89jefjc8w',
                 isShowing: true,
             },
             {
@@ -29,7 +29,7 @@ export default function TaskBoard(){
                 isCompleted: true,
                 createdAt: '2020-01-22 12:34:55',
                 contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
-                assignedEmployeeId: 'id: 22',
+                assignedEmployeeId: '07yrhfu07y',
                 isShowing: true,
             },
         ]
@@ -82,6 +82,19 @@ export default function TaskBoard(){
                 itemsAmount: currentStates.itemsAmount-1,
                 itemsMarked: newList[itemIndex].isCompleted ?  currentStates.itemsMarked-1 : currentStates.itemsMarked,
                 }, todoItems: newList.filter(i=> i.id != action.payload.id)}
+
+            case 'ASSIGN_USER':
+                newList.map(i=>{
+                        if(i._uid == action.payload.taskId){
+                            i.assignedEmployeeId = action.payload.userId;
+                        }
+                })
+
+                return {info:{
+                        itemsAmount: currentStates.itemsAmount,
+                        itemsMarked: currentStates.itemsMarked,
+                    },todoItems:newList};
+
             case 'SORT':
                 switch (action.payload.sType){
                     case 'date-asc':
