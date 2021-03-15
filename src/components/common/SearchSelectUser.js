@@ -3,6 +3,7 @@ import {useUserContext} from "./UserContext";
 import {Card, Dropdown, FormControl} from "react-bootstrap";
 
 export default function SearchSelectUser(props){
+    //todo use on add task card -> then remove lod ver. searchSelect
 
     const {usersList, dispatch} = useUserContext();
 
@@ -14,6 +15,9 @@ export default function SearchSelectUser(props){
                                changeAssignedUser(u._uid)
                            }}
             >
+            <span style={{backgroundColor:"#343a40", borderRadius: "50%", color:"white", width: "30px", height: "30px", display:"inline-block", textAlign:"center", fontSize:"small", paddingTop:"7px", marginRight:"10px"}}>
+                {`${u.name.split(/(?<=^\S+)\s/)[0].charAt(0) + (u.name.split(/(?<=^\S+)\s/).length >=2 ? u.name.split(/(?<=^\S+)\s/)[1].charAt(0) : "")}`}
+            </span>
                 {u.name}
             </Dropdown.Item>
         )
@@ -33,7 +37,9 @@ export default function SearchSelectUser(props){
                 onClick(e);
             }}
         >
-            {/*<span style={{backgroundColor:"blue"}} className={'p-2'}>KS</span>*/}
+            <span style={{backgroundColor:"#343a40", borderRadius: "50%", color:"white", width: "45px", height: "45px", display:"inline-block", textAlign:"center", fontSize:"small", paddingTop:"15px", marginRight:"10px"}}>
+                {`${children.props.children[0].split(/(?<=^\S+)\s/)[0].charAt(0) + (children.props.children[0].split(/(?<=^\S+)\s/).length >=2 ? children.props.children[0].split(/(?<=^\S+)\s/)[1].charAt(0) : "")}`}
+            </span>
             {children} &#x25bc;
         </a>
     ));
