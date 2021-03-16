@@ -5,7 +5,6 @@ const UserContext = createContext(undefined)
 export default function UserProvider(props){
 
     useEffect(()=>{
-        console.log("on init");
         const data = localStorage.getItem('users');
 
         if(JSON.parse(data).users.length >0){
@@ -92,7 +91,6 @@ export default function UserProvider(props){
     }
 
     useEffect(()=>{
-        console.log("on change")
         localStorage.setItem('users', JSON.stringify(usersList))
     },[usersList.users]);
 

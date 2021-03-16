@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import ToDoItem from "./TodoItem";
 import AddTodoItemModal from "./AddTodoItemModal";
 import TaskBoardHeader from "./TaskBoardHeader";
@@ -7,42 +7,59 @@ import {Container, Row, Col} from "react-bootstrap";
 
 export default function TaskBoard(){
 
+    useEffect(()=>{
+        const data = localStorage.getItem('tasks');
+
+        if(JSON.parse(data).todoItems.length >0){
+            dispatch({payload:{type: 'INIT', data: JSON.parse(data)}})
+        }else{
+            const data0 = {
+                info: {
+                    itemsAmount: 2,
+                    itemsMarked: 1
+                },
+                todoItems: [
+                    {
+                        id: 1,
+
+                        _uid: '780cysedh',
+                        isCompleted: false,
+                        createdAt: '2021-03-09 10:00:23',
+                        contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
+                        assignedEmployeeId: 'c89jefjc8w',
+                        isShowing: true,
+                    },
+                    {
+                        id: 2,
+                        _uid: 'nchpe87c',
+                        isCompleted: true,
+                        createdAt: '2020-01-22 12:34:55',
+                        contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
+                        assignedEmployeeId: '07yrhfu07y',
+                        isShowing: true,
+                    },
+                ]
+            }
+            dispatch({payload:{type: 'INIT', data: data0}})
+        }
+
+    },[])
+
     const [modalShow, setModalShow] = useState(false)
     const [todoItems, dispatch] = useReducer(todoReducer,{
         info: {
-            itemsAmount: 2,
-            itemsMarked: 1
-        },
-        todoItems: [
-            {
-                id: 1,
-
-                _uid: '780cysedh',
-                isCompleted: false,
-                createdAt: '2021-03-09 10:00:23',
-                contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
-                assignedEmployeeId: 'c89jefjc8w',
-                isShowing: true,
-            },
-            {
-                id: 2,
-                _uid: 'nchpe87c',
-                isCompleted: true,
-                createdAt: '2020-01-22 12:34:55',
-                contentText: 'Suspendisse egestas est eget ex dignissim pellentesque. Nam porttitor libero eget velit tincidunt, id accumsan massa feugiat. Nam cursus venenatis turpis eget viverra. Suspendisse ullamcorper ligula ut ultrices lobortis. Etiam congue vel ante id tempus. Pellentesque quis velit augue. Mauris quis risus venenatis, elementum sem a, bibendum magna. Nulla eget metus felis.',
-                assignedEmployeeId: '07yrhfu07y',
-                isShowing: true,
-            },
-        ]
-    })
+            itemsAmount: 0,
+            itemsMarked: 0
+        }, todoItems: []})
 
     function todoReducer(state, action){
-        const itemIndex = state.todoItems.findIndex(i=> i.id == action.payload.id)
+        const itemIndex = action.payload.id ? state.todoItems.findIndex(i=> i.id == action.payload.id) : 0 ;
         const currentStates = state.info;
-        //const newList = state.todoItems.map( (item) => ({...item}));
         const newList = state.todoItems.slice();
 
         switch(action.payload.type){
+            case 'INIT':
+                return action.payload.data;
             case 'COMPLETED':
                 newList[itemIndex].isCompleted = action.payload.mark;
                 return {info:{
@@ -101,7 +118,6 @@ export default function TaskBoard(){
                     case 'date-asc':
                         console.log(newList.forEach(i=>i.createdAt))
                         newList.sort((from, to)=> new Date(from.createdAt) - new Date(to.createdAt))
-                        console.log(newList)
                         return {info: currentStates,todoItems: newList}
                     case 'date-desc':
                         todoItems: newList.sort((from, to)=> new Date(to.createdAt) - new Date(from.createdAt))
@@ -138,6 +154,10 @@ export default function TaskBoard(){
         <ToDoItem key={item._uid} item={item} taskActions={dispatch}/>
         : null)
     })
+
+    useEffect(()=>{
+        localStorage.setItem('tasks',JSON.stringify(todoItems))
+    },[todoItems])
 
 
     return(
