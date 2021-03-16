@@ -1,5 +1,5 @@
 import React from "react";
-import {Jumbotron, Container, Row, Col, Button} from 'react-bootstrap';
+import {Jumbotron, Container, Alert} from 'react-bootstrap';
 
 export default function Dashboard(){
     return(
@@ -12,6 +12,20 @@ export default function Dashboard(){
                     </p>
                 </Container>
             </Jumbotron>
+
+            <Alert variant="success" className={'m-5'}>
+                <Alert.Heading>Hey, nice to see you</Alert.Heading>
+                <p>All changes users and tasks will be saved in local storage Your browser, so you can close the page without worrying about some data lose</p>
+                    <ul>
+                        <li>You can edit, add and remover users from  -><a href={"/user-list"}>users list</a></li>
+                        <li>similarly with tasks management -><a href={"/task-board"}>task board</a></li>
+                        <p>When you user List will be empty, you can just refresh page, then the default data will restored</p>
+                    </ul>
+                <hr />
+                <p className="mb-0 text-center">
+                    Enjoy play with my Todo Task Manager :)
+                </p>
+            </Alert>
         </Container>
     )
 }
