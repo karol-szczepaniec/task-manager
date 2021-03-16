@@ -25,7 +25,7 @@ export default function UserItem(props){
                 </Card.Title>
                 <Card.Subtitle className={'mb-2 text-muted'}>{user.workplace}</Card.Subtitle>
                 <Card.Text>
-                    <p>{user.email}</p>
+                    {user.email}
                 </Card.Text>
             </Card.Body>
             <Card.Footer className={'text-right'}>

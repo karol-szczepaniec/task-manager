@@ -23,7 +23,6 @@ export default function UserProvider(props){
                 email: 'adam.nowak@op.pl',
                 workplace: 'back-end developer',
                 isAdmin: false,
-
             },
             {
                 id: 3,

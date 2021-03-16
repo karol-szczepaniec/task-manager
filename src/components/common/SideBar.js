@@ -13,7 +13,7 @@ export default function SideBar(props){
             </Navbar.Brand>
                 {/*{props.children}*/}
             <NavLink
-                exacly
+                exacly={"true"}
                 to="/dashboard"
                 activeClassName="is-active"
                 className={'w-100 text-left mt-3 p-2 pl-4'}>
