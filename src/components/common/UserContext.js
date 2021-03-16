@@ -1,46 +1,60 @@
-import React,{useContext, createContext, useReducer} from "react";
+import React,{useContext, createContext, useReducer, useEffect} from "react";
 
 const UserContext = createContext(undefined)
 
 export default function UserProvider(props){
 
-    const [usersList, dispatch] = useReducer(userReducer,{
-        users:[
-            {
-                id: 1,
-                _uid: '07yrhfu07y',
-                name: 'Karol Szczepaniec',
-                createdAt: '2021-03-09 10:00:23',
-                email: 'karol.adrian.szczepaniec@gmail.com',
-                workplace: 'fron-end developer',
-                isAdmin: true,
-            },
-            {
-                id: 2,
-                _uid: 'c89jefjc8w',
-                name: 'Adam Nowak',
-                createdAt: '2021-01-01 22:00:13',
-                email: 'adam.nowak@op.pl',
-                workplace: 'back-end developer',
-                isAdmin: false,
-            },
-            {
-                id: 3,
-                _uid: 'cve0fh8wv',
-                name: 'Michał Kowalski',
-                createdAt: '2020-04-19 11:20:03',
-                email: 'michal.kowalski@vp.pl',
-                workplace: 'team leader',
-                isAdmin: false,
-            }
-        ]
-    })
+    useEffect(()=>{
+        console.log("on init");
+        const data = localStorage.getItem('users');
+
+        if(JSON.parse(data).users.length >0){
+            dispatch({payload:{type: "INIT", data: JSON.parse(data)}})
+        }else{
+            const data0 = {
+                users:[
+                    {
+                        id: 1,
+                        _uid: '07yrhfu07y',
+                        name: 'Karol Szczepaniec',
+                        createdAt: '2021-03-09 10:00:23',
+                        email: 'karol.adrian.szczepaniec@gmail.com',
+                        workplace: 'fron-end developer',
+                        isAdmin: true,
+                    },
+                    {
+                        id: 2,
+                        _uid: 'c89jefjc8w',
+                        name: 'Adam Nowak',
+                        createdAt: '2021-01-01 22:00:13',
+                        email: 'adam.nowak@op.pl',
+                        workplace: 'back-end developer',
+                        isAdmin: false,
+                    },
+                    {
+                        id: 3,
+                        _uid: 'cve0fh8wv',
+                        name: 'Michał Kowalski',
+                        createdAt: '2020-04-19 11:20:03',
+                        email: 'michal.kowalski@vp.pl',
+                        workplace: 'team leader',
+                        isAdmin: false,
+                    }
+                ]
+            };
+            dispatch({payload:{type: "INIT", data: data0 }})
+        }
+    },[])
+
+    const [usersList, dispatch] = useReducer(userReducer, {users:[]})
 
     function userReducer(state, action){
         //console.log(action.payload.type)
         let newList = state.users.slice();
-        const index = newList.findIndex(u=> u.id == action.payload.item.id)
+            // const index = newList.findIndex(u => u.id == action.payload.item.id)
         switch(action.payload.type){
+            case 'INIT':
+                return action.payload.data;
             case 'ADD_USER':
                 let randomUid =Math.random().toString(36).substring(2);
                 let lastId = Math.max.apply(Math,newList.map(i=>i.id));
@@ -66,6 +80,7 @@ export default function UserProvider(props){
                 return {users:newList}
 
             case 'EDIT_USER':
+                const index = newList.findIndex(u => u.id == action.payload.item.id)
                 newList[index] = action.payload.item;
                 return {users: newList};
             case 'REMOVE_USER':
@@ -75,6 +90,11 @@ export default function UserProvider(props){
                 return state;
         }
     }
+
+    useEffect(()=>{
+        console.log("on change")
+        localStorage.setItem('users', JSON.stringify(usersList))
+    },[usersList.users]);
 
     return(
         <UserContext.Provider value={{usersList, dispatch}}>

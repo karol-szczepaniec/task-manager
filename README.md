@@ -6,3 +6,6 @@
 
  Add useContext
 
+ Add useEffect   
+ 
+ Using localStorage to save current app state
