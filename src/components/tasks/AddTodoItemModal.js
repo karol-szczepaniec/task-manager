@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import SearchSelectUser from "./SearchSelectUser";
-import {Modal, Button, Row, Col, InputGroup, FormControl} from "react-bootstrap";
+import {Modal, Button, Row, Col, InputGroup, FormControl, Form} from "react-bootstrap";
 
 export default function AddTodoItemModal(props){
+    const [validated, setValidated] = useState(false);
     const [item, setItem] = useState(
         {
             contentText: "",
@@ -14,6 +15,7 @@ export default function AddTodoItemModal(props){
 
     function validate(){
         if(item.contentText.length >2){
+            setValidated(false)
             addItem({payload:{type:'ADD', newItem: item}})
             setItem({
                 contentText: "",
@@ -21,14 +23,11 @@ export default function AddTodoItemModal(props){
             })
             props.onHide();
         }else{
-            //TODO validate text length
-            // if length <2 char -> input error validation
-            console.log("error-> need text area validation")
+            setValidated(true)
         }
     }
 
     function assignUser(uId){
-        //TODO if user id ==0 -> validate error?
         let newItem = {
             contentText: item.contentText,
             assignedEmployeeId: uId,
@@ -55,13 +54,14 @@ export default function AddTodoItemModal(props){
                         <SearchSelectUser assignUser={assignUser}/>
                     </Col>
                     <Col md={8}>
-                        <InputGroup>
+                        <InputGroup hasValidation>
                             <InputGroup.Prepend>
                                 <InputGroup.Text>content</InputGroup.Text>
                             </InputGroup.Prepend>
                             <FormControl as="textarea" aria-label="With textarea"
                                          placeholder="Type task content..."
                                          value={item.contentText}
+                                         required isInvalid={validated}
                                          style={{maxHeight: "450px", minHeight: "60px"}}
                                          onChange={(e)=>{
                                              e.preventDefault();
@@ -74,12 +74,15 @@ export default function AddTodoItemModal(props){
                                              }
                                          }}
                             />
+                            <FormControl.Feedback type="invalid">
+                                The text must be longer than 2 characters and shorter than 124
+                            </FormControl.Feedback>
                         </InputGroup>
                     </Col>
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={'success'}  onClick={(e)=>{
+                <Button variant={'success'} onClick={(e)=>{
                     e.preventDefault();
                     validate();
                 }}>Add task</Button>
