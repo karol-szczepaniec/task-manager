@@ -14,7 +14,7 @@ export default function App() {
         <UserProvider>
         <Router>
                 <Row className={'h-100'}>
-                     <Col style={{backgroundColor:"#343a40"}} md={2} className={'p-0'}>
+                     <Col style={{backgroundColor:"#343a40", minWidth: "180px"}} sm={2} className={'p-0'}>
                         <SideBar/>
                     </Col>
                     <Col className={'p-0'}>

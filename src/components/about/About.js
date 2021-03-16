@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Jumbotron} from "react-bootstrap";
+import {Alert, Container, Jumbotron} from "react-bootstrap";
 
 export default function About(){
     return(
@@ -12,6 +12,17 @@ export default function About(){
                     </p>
                 </Container>
             </Jumbotron>
+            <Alert variant="success" className={'m-5'}>
+                <Alert.Heading>My remote repository</Alert.Heading>
+                <a target={"blank"} href={"https://github.com/karol-szczepaniec"}>GitHub</a>
+                <p>
+                    <a target={"blank"} href={"https://github.com/karol-szczepaniec/task-manager"}>Current application</a>
+                </p>
+                <hr />
+                <p className="mb-0 text-center">
+                    Enjoy play with my Todo Task Manager :)
+                </p>
+            </Alert>
         </Container>
     )
 }
