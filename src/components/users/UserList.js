@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useUserContext} from "../common/UserContext";
 import UserItem from "./UserItem";
 import UserFormModal from "./UserFormModal";
-import {Row, Col, Container, Button} from "react-bootstrap";
+import {Row, Col, Container, Button, Pagination} from "react-bootstrap";
 
 export default function UserList(){
 
@@ -16,6 +16,16 @@ export default function UserList(){
 
     //TODO sort by createdAt?
     // user states
+    // pagination
+    let active = 1;
+    let items = [];
+    for (let number = 1; number <= 5; number++) {
+        items.push(
+            <Pagination.Item key={number} active={number === active}>
+                {number}
+            </Pagination.Item>,
+        );
+    }
     return(
         <Container fluid className={'m-0'}>
             <Row className={'bg-light p-4 sticky-top border-bottom border-secondary'}>
@@ -35,6 +45,11 @@ export default function UserList(){
                 </Col>
                 <Col md={3}>
                     soon will be user states
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                <Pagination size="sm">{items}</Pagination>
                 </Col>
             </Row>
             <UserFormModal show={modalShow.showModal} onHide={()=> setModalShow({showModal: false, modalType: null})}

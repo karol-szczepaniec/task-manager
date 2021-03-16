@@ -3,7 +3,7 @@ import ToDoItem from "./TodoItem";
 import AddTodoItemModal from "./AddTodoItemModal";
 import TaskBoardHeader from "./TaskBoardHeader";
 import StatusBar from "./StatusBar";
-import {Container, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Pagination} from "react-bootstrap";
 
 export default function TaskBoard(){
 
@@ -159,6 +159,16 @@ export default function TaskBoard(){
         localStorage.setItem('tasks',JSON.stringify(todoItems))
     },[todoItems])
 
+    // pagination
+    let active = 1;
+    let items = [];
+    for (let number = 1; number <= 5; number++) {
+        items.push(
+            <Pagination.Item key={number} active={number === active}>
+                {number}
+            </Pagination.Item>,
+        );
+    }
 
     return(
         <Container fluid className={'m-0'}>
@@ -170,6 +180,11 @@ export default function TaskBoard(){
                 <Col md={4}>
                     <StatusBar info={todoItems.info} modalHandler={()=>setModalShow(true)}/>
                     {/*<AddTodoItem addTodoItem={dispatch}/>*/}
+                </Col>
+            </Row>
+            <Row>
+                <Col md={12}>
+                    <Pagination size="sm">{items}</Pagination>
                 </Col>
             </Row>
             <AddTodoItemModal show={modalShow} onHide={()=>setModalShow(false)} addTodoItem={dispatch}/>
