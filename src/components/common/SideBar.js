@@ -6,15 +6,15 @@ import {HouseFill, InfoCircleFill, KanbanFill, PeopleFill} from "react-bootstrap
 export default function SideBar(props){
     return(
         <Navbar bg={'dark'} className={'flex-column p-0 pt-4'} sticky={"top"}>
-            <Navbar.Brand href={'/dashboard'} className={'text-center mb-5 '}>
+            <Navbar.Brand href={'/'} className={'text-center mb-5 '}>
                 <h2 className={'text-primary'}>
                     Task Todo
                 </h2>
             </Navbar.Brand>
                 {/*{props.children}*/}
             <NavLink
-                exacly={"true"}
-                to="/dashboard"
+                exact
+                to="/"
                 activeClassName="is-active"
                 className={'w-100 text-left mt-3 p-2 pl-3'}>
                 <h5><HouseFill className={'mr-2'}/>HOME</h5>
