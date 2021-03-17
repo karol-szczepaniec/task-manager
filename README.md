@@ -1,4 +1,10 @@
-# New Todo App
+# Task manager app
+
+## Deployment:
+
+[live demo](http://karol.ssd-linuxpl.com)
+
+##Hooks
 
  Add React Bootstrap
  

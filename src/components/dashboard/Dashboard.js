@@ -20,6 +20,7 @@ export default function Dashboard(){
                         <li>You can edit, add and remover users from  -><a href={"/user-list"}>users list</a></li>
                         <li>similarly with tasks management -><a href={"/task-board"}>task board</a></li>
                         <p>When you user List will be empty, you can just refresh page, then the default data will restored</p>
+                        <li>Deployment -> <a target={"_blank"} href={"http://karol.ssd-linuxpl.com"}>task board live demo</a></li>
                     </ul>
                 <hr />
                 <p className="mb-0 text-center">
