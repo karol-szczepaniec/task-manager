@@ -20,10 +20,10 @@ export default function App() {
                     <Col className={'p-0'}>
                         <Switch>
                             <Route exact path="/" component={Dashboard}/>
-                            <Route path="/about" component={About}/>
-                            <Route path="/user-list" component={UserList}/>
-                            <Route path="/task-board" component={TaskBoard}/>
-                            {/*<Route path="*" component={Dashboard}/>*/}
+                            <Route path="/about/" component={About}/>
+                            <Route path="/user-list/" component={UserList}/>
+                            <Route path="/task-board/" component={TaskBoard}/>
+                            <Route path="*" component={Dashboard}/>
                         </Switch>
                     </Col>
                 </Row>

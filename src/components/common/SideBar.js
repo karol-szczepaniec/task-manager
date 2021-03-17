@@ -21,21 +21,21 @@ export default function SideBar(props){
             </NavLink>
 
             <NavLink
-                to="/user-list"
+                strict to="/user-list/"
                 activeClassName="is-active"
                 className={'w-100 text-left mt-3 p-2 pl-3'}>
                 <h5><PeopleFill className={'mr-2'}/>USER LIST</h5>
             </NavLink>
 
             <NavLink
-                to="/task-board"
+                to="/task-board/"
                 activeClassName="is-active"
                 className={'w-100 text-left mt-3 p-2 pl-3'}>
                 <h5><KanbanFill className={'mr-2'}/>TASK BOARD</h5>
             </NavLink>
 
             <NavLink
-                to="/about"
+                to="/about/"
                 activeClassName="is-active"
                 className={'w-100 text-left mt-3 p-2 pl-3'}>
                 <h5><InfoCircleFill className={'mr-2'}/>ABOUT</h5>
